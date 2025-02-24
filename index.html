@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Healthcare Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">⚕️</span>
+                HealthCare Hub
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active" onclick="showSection('dashboard-section')">Dashboard</a>
+                <a href="#" onclick="showSection('appointments-section')">Appointments</a>
+                <a href="#" onclick="showSection('records-section')">Records</a>
+                <a href="#" onclick="showSection('documents-section')">Documents</a>
+                <a href="#" onclick="showSection('help-section')">Help</a>
+            </div>
+            <div class="profile-section">
+                <div class="notification-icon" onclick="toggleNotifications()">
+                    <span>🔔</span>
+                    <span class="notification-badge">3</span>
+                    
+                    <!-- Notifications Panel -->
+                    <div class="notifications-panel" id="notificationsPanel">
+                        <div class="notifications-header">
+                            <span class="notifications-title">Notifications</span>
+                            <span class="mark-all-read" onclick="markAllAsRead()">Mark all as read</span>
+                        </div>
+                        <div class="notifications-list">
+                            <div class="notification-item unread">
+                                <div class="notification-content">Your appointment with Dr. Johnson is tomorrow at 10:00 AM.</div>
+                                <div class="notification-time">1 hour ago</div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-content">Prescription refill reminder: Amoxicillin, 2 days left.</div>
+                                <div class="notification-time">3 hours ago</div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-content">Your lab results are ready. View them in your records.</div>
+                                <div class="notification-time">5 hours ago</div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-content">Your appointment with Dr. Smith has been confirmed.</div>
+                                <div class="notification-time">Yesterday</div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-content">Annual health check-up reminder. Schedule now!</div>
+                                <div class="notification-time">3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="notifications-footer">
+                            <a href="#" class="view-all-notifications">View all notifications</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="avatar">JS</div>
+            </div>
+            <div class="mobile-menu-icon" onclick="toggleMobileMenu()">☰</div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <span class="logo-icon">⚕️</span>
+                HealthCare Hub
+            </div>
+            <div class="mobile-menu-close" onclick="toggleMobileMenu()">✕</div>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="#" class="mobile-nav-link active" onclick="showSection('dashboard-section'); toggleMobileMenu();">Dashboard</a>
+            <a href="#" class="mobile-nav-link" onclick="showSection('appointments-section'); toggleMobileMenu();">Appointments</a>
+            <a href="#" class="mobile-nav-link" onclick="showSection('records-section'); toggleMobileMenu();">Records</a>
+            <a href="#" class="mobile-nav-link" onclick="showSection('documents-section'); toggleMobileMenu();">Documents</a>
+            <a href="#" class="mobile-nav-link" onclick="showSection('settings-section'); toggleMobileMenu();">Settings</a>
+            <a href="#" class="mobile-nav-link" onclick="showSection('help-section'); toggleMobileMenu();">Help</a>
+        </div>
+    </div>
+    <div class="mobile-menu-backdrop" id="mobileMenuBackdrop" onclick="toggleMobileMenu()"></div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="dashboard">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-item active">
+                        <span class="sidebar-icon">📊</span>
+                        Dashboard
+                    </div>
+                    <div class="sidebar-item" onclick="showSection('appointments-section')">
+                        <span class="sidebar-icon">📅</span>
+                        Appointments
+                    </div>
+                    <div class="sidebar-item" onclick="showSection('records-section')">
+                        <span class="sidebar-icon">📋</span>
+                        Medical Records
+                    </div>
+                    <div class="sidebar-item" onclick="showSection('prescriptions-section')">
+                        <span class="sidebar-icon">💊</span>
+                        Prescriptions
+                    </div>
+                    <div class="sidebar-item" onclick="showSection('documents-section')">
+                        <span class="sidebar-icon">📄</span>
+                        Documents
+                    </div>
+                    <div class="sidebar-item" onclick="showSection('settings-section')">
+                        <span class="sidebar-icon">⚙️</span>
+                        Settings
+                    </div>
+                    <div class="sidebar-item" onclick="showSection('help-section')">
+                        <span class="sidebar-icon">❓</span>
+                        Help & Support
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content">
+                    <!-- Dashboard Section -->
+                    <div id="dashboard-section" class="content-section active">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Welcome back, John Smith</h1>
+                            <p>Here's a summary of your health information and upcoming appointments.</p>
+                        </div>
+                        
+                        <!-- Stats Grid -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon" style="background-color: #e8f0fe; color: var(--primary);">📅</div>
+                                    <div class="stat-title">Upcoming Appointments</div>
+                                </div>
+                                <div class="stat-value">3</div>
+                                <div class="stat-footer">
+                                    <span style="color: var(--secondary);">↑ 2</span>
+                                    <span>from last month</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon" style="background-color: #e6f4ea; color: var(--secondary);">💊</div>
+                                    <div class="stat-title">Active Medications</div>
+                                </div>
+                                <div class="stat-value">2</div>
+                                <div class="stat-footer">
+                                    <span style="color: var(--danger);">↓ 1</span>
+                                    <span>from last month</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon" style="background-color: #fef6e0; color: var(--warning);">🔬</div>
+                                    <div class="stat-title">Pending Lab Results</div>
+                                </div>
+                                <div class="stat-value">1</div>
+                                <div class="stat-footer">
+                                    <span style="color: var(--warning);">→ 0</span>
+                                    <span>change from last month</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon" style="background-color: #fce8e6; color: var(--danger);">⚠️</div>
+                                    <div class="stat-title">Allergies</div>
+                                </div>
+                                <div class="stat-value">2</div>
+                                <div class="stat-footer">
+                                    <span style="color: var(--warning);">→ 0</span>
+                                    <span>change from last month</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Upcoming Appointments Section -->
+                        <div class="appointments-list">
+                            <div class="section-title">
+                                <h2>Upcoming Appointments</h2>
+                                <a href="#" class="view-all" onclick="showSection('appointments-section')">View all</a>
+                            </div>
+                            
+                            <div class="appointment-card">
+                                <div class="appointment-header">
+                                    <div class="appointment-title">Dr. Johnson - General Check-up</div>
+                                    <div class="appointment-status upcoming">Upcoming</div>
+                                </div>
+                                <div class="appointment-details">
+                                    <div class="appointment-detail">
+                                        <span>📅</span>
+                                        <span>Feb 25, 2025</span>
+                                    </div>
+                                    <div class="appointment-detail">
+                                        <span>🕒</span>
+                                        <span>10:00 AM</span>
+                                    </div>
+                                    <div class="appointment-detail">
+                                        <span>📍</span>
+                                        <span>University Health Center, Room 204</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="appointment-card">
+                                <div class="appointment-header">
+                                    <div class="appointment-title">Dr. Williams - Dermatology Follow-up</div>
+                                    <div class="appointment-status upcoming">Upcoming</div>
+                                </div>
+                                <div class="appointment-details">
+                                    <div class="appointment-detail">
+                                        <span>📅</span>
+                                        <span>Mar 2, 2025</span>
+                                    </div>
+                                    <div class="appointment-detail">
+                                        <span>🕒</span>
+                                        <span>2:30 PM</span>
+                                    </div>
+                                    <div class="appointment-detail">
+                                        <span>📍</span>
+                                        <span>University Health Center, Room 115</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="appointment-card">
+                                <div class="appointment-header">
+                                    <div class="appointment-title">Dr. Miller - Vaccination</div>
+                                    <div class="appointment-status upcoming">Upcoming</div>
+                                </div>
+                                <div class="appointment-details">
+                                    <div class="appointment-detail">
+                                        <span>📅</span>
+                                        <span>Mar 15, 2025</span>
+                                    </div>
+                                    <div class="appointment-detail">
+                                        <span>🕒</span>
+                                        <span>11:15 AM</span>
+                                    </div>
+                                    <div class="appointment-detail">
+                                        <span>📍</span>
+                                        <span>University Health Center, Room 101</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Records Section -->
+                        <div class="records-section">
+                            <div class="section-title">
+                                <h2>Recent Medical Records</h2>
+                                <a href="#" class="view-all" onclick="showSection('records-section')">View all</a>
+                            </div>
+                            
+                            <div class="search-bar">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" class="search-input" placeholder="Search your records...">
+                            </div>
+                            
+                            <div class="filter-options">
+                                <button class="filter-btn active">All</button>
+                                <button class="filter-btn">Lab Results</button>
+                                <button class="filter-btn">Diagnoses</button>
+                                <button class="filter-btn">Prescriptions</button>
+                                <button class="filter-btn">Vaccinations</button>
+                                <button class="filter-btn">Visit Notes</button>
+                            </div>
+                            
+                            <div class="records-list">
+                                <div class="record-item">
+                                    <div class="record-info">
+                                        <div class="record-title">Blood Test Results</div>
+                                        <div class="record-date">Feb 10, 2025</div>
+                                    </div>
+                                    <div class="record-actions">
+                                        <button class="action-btn view">View</button>
+                                        <button class="action-btn download">Download</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="record-item">
+                                    <div class="record-info">
+                                        <div class="record-title">Visit Notes - Dr. Johnson</div>
+                                        <div class="record-date">Jan 24, 2025</div>
+                                    </div>
+                                    <div class="record-actions">
+                                        <button class="action-btn view">View</button>
+                                        <button class="action-btn download">Download</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="record-item">
+                                    <div class="record-info">
+                                        <div class="record-title">Prescription - Amoxicillin</div>
+                                        <div class="record-date">Jan 24, 2025</div>
+                                    </div>
+                                    <div class="record-actions">
+                                        <button class="action-btn view">View</button>
+                                        <button class="action-btn download">Download</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Appointments Section -->
+                    <div id="appointments-section" class="content-section">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Appointments</h1>
+                            <p>View and manage your upcoming and past appointments.</p>
+                        </div>
+                        
+                        <div class="search-bar">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" class="search-input" placeholder="Search appointments...">
+                        </div>
+                        
+                        <div class="filter-options">
+                            <button class="filter-btn active">All</button>
+                            <button class="filter-btn">Upcoming</button>
+                            <button class="filter-btn">Completed</button>
+                            <button class="filter-btn">Canceled</button>
+                        </div>
+                        
+                        <div class="appointment-list-view">
+                            <div class="appointment-item">
+                                <div class="appointment-item-header">
+                                    <div class="appointment-title">Dr. Johnson - General Check-up</div>
+                                    <div class="appointment-status upcoming">Upcoming</div>
+                                </div>
+                                <div class="appointment-item-body">
+                                    <div class="appointment-info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Date</div>
+                                            <div class="info-value">Feb 25, 2025</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Time</div>
+                                            <div class="info-value">10:00 AM</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Location</div>
+                                            <div class="info-value">University Health Center, Room 204</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Doctor</div>
+                                            <div class="info-value">Dr. Sarah Johnson</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="appointment-item-footer">
+                                    <button class="btn btn-outline">Cancel</button>
+                                    <button class="btn btn-outline">Reschedule</button>
+                                    <button class="btn btn-primary">Check In</button>
+                                </div>
+                            </div>
+                            
+                            <div class="appointment-item">
+                                <div class="appointment-item-header">
+                                    <div class="appointment-title">Dr. Williams - Dermatology Follow-up</div>
+                                    <div class="appointment-status upcoming">Upcoming</div>
+                                </div>
+                                <div class="appointment-item-body">
+                                    <div class="appointment-info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Date</div>
+                                            <div class="info-value">Mar 2, 2025</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Time</div>
+                                            <div class="info-value">2:30 PM</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Location</div>
+                                            <div class="info-value">University Health Center, Room 115</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Doctor</div>
+                                            <div class="info-value">Dr. Michael Williams</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="appointment-item-footer">
+                                    <button class="btn btn-outline">Cancel</button>
+                                    <button class="btn btn-outline">Reschedule</button>
+                                    <button class="btn btn-primary">Check In</button>
+                                </div>
+                            </div>
+                            
+                            <div class="appointment-item">
+                                <div class="appointment-item-header">
+                                    <div class="appointment-title">Dr. Smith - Annual Physical</div>
+                                    <div class="appointment-status completed">Completed</div>
+                                </div>
+                                <div class="appointment-item-body">
+                                    <div class="appointment-info-grid">
+                                        <div class="info-item">
+                                            <div class="info-label">Date</div>
+                                            <div class="info-value">Jan 15, 2025</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Time</div>
+                                            <div class="info-value">9:00 AM</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Location</div>
+                                            <div class="info-value">University Health Center, Room 202</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-label">Doctor</div>
+                                            <div class="info-value">Dr. Emily Smith</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="appointment-item-footer">
+                                    <button class="btn btn-outline">View Summary</button>
+                                    <button class="btn btn-primary">Book Follow-up</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Records Section -->
+                    <div id="records-section" class="content-section">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Medical Records</h1>
+                            <p>View and manage your medical records and test results.</p>
+                        </div>
+                        
+                        <div class="search-bar">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" class="search-input" placeholder="Search records...">
+                        </div>
+                        
+                        <div class="filter-options">
+                            <button class="filter-btn active">All</button>
+                            <button class="filter-btn">Lab Results</button>
+                            <button class="filter-btn">Diagnoses</button>
+                            <button class="filter-btn">Prescriptions</button>
+                            <button class="filter-btn">Vaccinations</button>
+                            <button class="filter-btn">Visit Notes</button>
+                        </div>
+                        
+                        <div class="records-list">
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Blood Test Results</div>
+                                    <div class="record-date">Feb 10, 2025</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                            
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Visit Notes - Dr. Johnson</div>
+                                    <div class="record-date">Jan 24, 2025</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                            
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Prescription - Amoxicillin</div>
+                                    <div class="record-date">Jan 24, 2025</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                            
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Allergy Test Results</div>
+                                    <div class="record-date">Dec 15, 2024</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                            
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Flu Vaccination</div>
+                                    <div class="record-date">Nov 10, 2024</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                            
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Annual Physical Results</div>
+                                    <div class="record-date">Oct 5, 2024</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Prescriptions Section -->
+                    <div id="prescriptions-section" class="content-section">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Prescriptions</h1>
+                            <p>View and manage your active and past prescriptions.</p>
+                        </div>
+                        
+                        <div class="search-bar">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" class="search-input" placeholder="Search prescriptions...">
+                        </div>
+                        
+                        <div class="filter-options">
+                            <button class="filter-btn active">All</button>
+                            <button class="filter-btn">Active</button>
+                            <button class="filter-btn">Expired</button>
+                            <button class="filter-btn">Refill Due</button>
+                        </div>
+                        
+                        <div class="medications-list">
+                            <div class="medication-item">
+                                <div class="medication-name">Amoxicillin 500mg</div>
+                                <div class="medication-dosage">1 capsule three times daily</div>
+                                <div class="medication-schedule">Refills: 2 remaining (expires Mar 24, 2025)</div>
+                            </div>
+                            
+                            <div class="medication-item">
+                                <div class="medication-name">Loratadine 10mg</div>
+                                <div class="medication-dosage">1 tablet daily</div>
+                                <div class="medication-schedule">Refills: 5 remaining (expires Aug 15, 2025)</div>
+                            </div>
+                            
+                            <div class="medication-item">
+                                <div class="medication-name">Ibuprofen 400mg</div>
+                                <div class="medication-dosage">1 tablet as needed for pain</div>
+                                <div class="medication-schedule">Refills: 1 remaining (expires Apr 10, 2025)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Documents Section -->
+                    <div id="documents-section" class="content-section">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Documents</h1>
+                            <p>Generate and download important health documents.</p>
+                        </div>
+                        
+                        <div class="doc-options">
+                            <div class="doc-option">
+                                <div class="doc-icon">📃</div>
+                                <div class="doc-title">Health Summary</div>
+                                <div class="doc-description">A comprehensive summary of your health information.</div>
+                            </div>
+                            
+                            <div class="doc-option">
+                                <div class="doc-icon">💉</div>
+                                <div class="doc-title">Immunization Record</div>
+                                <div class="doc-description">A record of all your vaccinations.</div>
+                            </div>
+                            
+                            <div class="doc-option">
+                                <div class="doc-icon">🏥</div>
+                                <div class="doc-title">Insurance Information</div>
+                                <div class="doc-description">Your health insurance details and coverage.</div>
+                            </div>
+                            
+                            <div class="doc-option">
+                                <div class="doc-icon">📋</div>
+                                <div class="doc-title">Medical Release Form</div>
+                                <div class="doc-description">Authorization to release your medical information.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="records-list">
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Health Summary</div>
+                                    <div class="record-date">Generated on Jan 15, 2025</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                            
+                            <div class="record-item">
+                                <div class="record-info">
+                                    <div class="record-title">Immunization Record</div>
+                                    <div class="record-date">Generated on Dec 10, 2024</div>
+                                </div>
+                                <div class="record-actions">
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn download">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div id="settings-section" class="content-section">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Settings</h1>
+                            <p>Manage your account settings and preferences.</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-section-title">Personal Information</div>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Full Name</div>
+                                    <div class="detail-value">John Smith</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Date of Birth</div>
+                                    <div class="detail-value">May 15, 1998</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Student ID</div>
+                                    <div class="detail-value">S12345678</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Email</div>
+                                    <div class="detail-value">john.smith@university.edu</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Phone</div>
+                                    <div class="detail-value">(555) 123-4567</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Address</div>
+                                    <div class="detail-value">123 University Ave, Campus Housing #456</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" style="margin-top: 15px;">Edit Personal Information</button>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-section-title">Notification Preferences</div>
+                            <div class="notification-options">
+                                <div class="notification-option">
+                                    <div class="switch-label">Email Notifications</div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-option">
+                                    <div class="switch-label">SMS Notifications</div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-option">
+                                    <div class="switch-label">Appointment Reminders</div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-option">
+                                    <div class="switch-label">Prescription Refill Reminders</div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="notification-option">
+                                    <div class="switch-label">Lab Result Notifications</div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" style="margin-top: 15px;">Save Preferences</button>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="detail-section-title">Privacy & Security</div>
+                            <div class="security-options">
+                                <button class="btn btn-outline">Change Password</button>
+                                <button class="btn btn-outline">Two-Factor Authentication</button>
+                                <button class="btn btn-outline">Manage Connected Apps</button>
+                                <button class="btn btn-outline">Privacy Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Help Section -->
+                    <div id="help-section" class="content-section">
+                        <div class="welcome-section">
+                            <h1 class="welcome-title">Help & Support</h1>
+                            <p>Find answers to common questions and get support when you need it.</p>
+                        </div>
+                        
+                        <div class="help-options">
+                            <div class="help-option">
+                                <div class="help-icon">📚</div>
+                                <div class="help-title">FAQs</div>
+                                <div class="help-description">Find answers to common questions.</div>
+                            </div>
+                            
+                            <div class="help-option">
+                                <div class="help-icon">📞</div>
+                                <div class="help-title">Contact Support</div>
+                                <div class="help-description">Speak with a support representative.</div>
+                            </div>
+                            
+                            <div class="help-option">
+                                <div class="help-icon">🏥</div>
+                                <div class="help-title">Emergency Services</div>
+                                <div class="help-description">How to access emergency care.</div>
+                            </div>
+                            
+                            <div class="help-option">
+                                <div class="help-icon">📱</div>
+                                <div class="help-title">App Tutorial</div>
+                                <div class="help-description">Learn how to use the platform.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-section">
+                            <div class="section-title">
+                                <h2>Frequently Asked Questions</h2>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">How do I schedule an appointment?</div>
+                                <div class="faq-answer">
+                                    You can schedule an appointment by navigating to the Appointments section and clicking on "Schedule New Appointment" button. Follow the prompts to select a provider, date, and time.
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">How can I access my medical records?</div>
+                                <div class="faq-answer">
+                                    Your medical records can be accessed in the Records section. You can filter by record type and download or view your records directly from the platform.
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">How do I request a prescription refill?</div>
+                                <div class="faq-answer">
+                                    To request a prescription refill, go to the Prescriptions section, find the medication you need refilled, and click the "Request Refill" button.
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item">
+                                <div class="faq-question">What should I do in a medical emergency?</div>
+                                <div class="faq-answer">
+                                    For medical emergencies, call 911 immediately or go to the nearest emergency room. The University Health Center emergency line is (555) 911-0000.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-section">
+                            <div class="section-title">
+                                <h2>Contact Information</h2>
+                            </div>
+                            
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <div class="contact-label">Health Center Phone</div>
+                                    <div class="contact-value">(555) 123-4567</div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-label">Health Center Email</div>
+                                    <div class="contact-value">health@university.edu</div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-label">Emergency Line</div>
+                                    <div class="contact-value">(555) 911-0000</div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-label">Address</div>
+                                    <div class="contact-value">123 University Health Center Ave, Campus Town, ST 12345</div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-label">Hours of Operation</div>
+                                    <div class="contact-value">Monday-Friday: 8:00 AM - 6:00 PM, Saturday: 9:00 AM - 1:00 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <span class="logo-icon">⚕️</span>
+                HealthCare Hub
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <div class="footer-section-title">Quick Links</div>
+                    <a href="#" class="footer-link">Dashboard</a>
+                    <a href="#" class="footer-link">Appointments</a>
+                    <a href="#" class="footer-link">Records</a>
+                    <a href="#" class="footer-link">Documents</a>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-section-title">Resources</div>
+                    <a href="#" class="footer-link">FAQs</a>
+                    <a href="#" class="footer-link">Student Health Guide</a>
+                    <a href="#" class="footer-link">Insurance Information</a>
+                    <a href="#" class="footer-link">Health Articles</a>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-section-title">Support</div>
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <a href="#" class="footer-link">Report an Issue</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">© 2025 University Health Center. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Show/hide mobile menu
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+            mobileMenu.classList.toggle('active');
+            mobileMenuBackdrop.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        }
+        
+        // Show/hide notifications panel
+        function toggleNotifications() {
+            const notificationsPanel = document.getElementById('notificationsPanel');
+            notificationsPanel.classList.toggle('active');
+            
+            // Close when clicking outside
+            document.addEventListener('click', function(event) {
+                const notificationIcon = document.querySelector('.notification-icon');
+                if (!notificationIcon.contains(event.target) && !notificationsPanel.contains(event.target)) {
+                    notificationsPanel.classList.remove('active');
+                }
+            });
+        }
+        
+        // Mark all notifications as read
+        function markAllAsRead() {
+            const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+            unreadNotifications.forEach(notification => {
+                notification.classList.remove('unread');
+            });
+            
+            const notificationBadge = document.querySelector('.notification-badge');
+            notificationBadge.textContent = '0';
+        }
+        
+        // Show different content sections
+        function showSection(sectionId) {
+            // Hide all content sections
+            const contentSections = document.querySelectorAll('.content-section');
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+            
+            // Update active states in nav links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update active states in sidebar
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(sectionId)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
